@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Imagens Hospedadas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .image-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .image-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-info {
+            padding: 20px;
+        }
+        
+        .image-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .image-url {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            word-break: break-all;
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .copy-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+        
+        .instructions h2 {
+            margin-bottom: 20px;
+        }
+        
+        .url-example {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+        
+        @media (max-width: 768px) {
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 Minhas Imagens Hospedadas</h1>
+            <p class="subtitle">Todas as imagens estão disponíveis para uso em qualquer site</p>
+        </header>
+        
+        <div class="images-grid" id="images-container">
+            <!-- As imagens serão inseridas aqui via JavaScript -->
+        </div>
+        
+        <div class="instructions">
+            <h2>🎯 Como usar estas imagens no seu site</h2>
+            <p>Após fazer o deploy no Vercel, você receberá um domínio como:</p>
+            <div class="url-example">https://meu-site-imagens.vercel.app</div>
+            
+            <p>Para usar qualquer imagem, utilize o seguinte formato:</p>
+            <div class="url-example">https://seu-dominio.vercel.app/assets/images/NOME-DA-IMAGEM.extensão</div>
+            
+            <p>Exemplo prático no HTML:</p>
+            <div class="url-example">
+                &lt;img src="https://meu-site-imagens.vercel.app/assets/images/minha-foto.jpg" alt="Descrição"&gt;
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lista de imagens - SUBSTITUA com os nomes das SUAS imagens
+        const imagens = [
+            // Exemplo: 'nome-da-imagem.jpg'
+            // Adicione aqui os nomes de TODAS as suas imagens
+            'exemplo1.jpg',
+            'exemplo2.jpg',
+            'exemplo3.jpg'
+        ];
+        
+        const container = document.getElementById('images-container');
+        const siteUrl = window.location.origin; // Pega a URL atual
+        
+        // FUNÇÃO IMPORTANTE: Substitua o array acima com os nomes reais das suas imagens
+        // Após enviar as imagens para o GitHub, volte aqui e edite esta lista
+        
+        imagens.forEach((imagem, index) => {
+            const imageUrl = `${siteUrl}/assets/images/${imagem}`;
+            
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            card.innerHTML = `
+                <div class="image-container">
+                    <img src="${imageUrl}" alt="${imagem}" loading="lazy" 
+                         onerror="this.src='https://via.placeholder.com/400x250/667eea/ffffff?text=Imagem+não+encontrada'">
+                </div>
+                <div class="image-info">
+                    <div class="image-name">${imagem}</div>
+                    <div class="image-url" id="url-${index}">${imageUrl}</div>
+                    <button class="copy-btn" onclick="copyToClipboard('url-${index}')">
+                        📋 Copiar URL
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+        
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                btn.style.background = '#2196F3';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#4CAF50';
+                }, 2000);
+            });
+        }
+        
+        // Mensagem inicial
+        console.log('⚠️ IMPORTANTE: Não esqueça de editar a lista de imagens no código!');
+        console.log('1. Envie suas imagens para a pasta assets/images/');
+        console.log('2. Volte no index.html e edite o array "imagens" com os nomes reais');
+    </script>
+</body>
+</html>
