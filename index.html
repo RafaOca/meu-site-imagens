@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Imagens Hospedadas</title>
+    <title>Biblioteca de Imagens por Categorias</title>
     <style>
         * {
             margin: 0;
@@ -13,57 +13,90 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
             color: white;
-            min-height: 100vh;
-            padding: 40px 20px;
+            padding: 30px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
         
         h1 {
             font-size: 2.8rem;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+        
+        .category-section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .images-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
-            margin-bottom: 50px;
         }
         
         .image-card {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .image-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
         }
         
         .image-container {
-            width: 100%;
-            height: 250px;
+            height: 200px;
             overflow: hidden;
         }
         
@@ -71,33 +104,17 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .image-card:hover img {
-            transform: scale(1.05);
         }
         
         .image-info {
             padding: 20px;
         }
         
-        .image-name {
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: white;
-        }
-        
-        .image-url {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-            word-break: break-all;
+        .image-path {
             font-family: monospace;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 8px;
-            border-radius: 6px;
-            margin-top: 10px;
-            display: none;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
         }
         
         .copy-btn {
@@ -107,9 +124,8 @@
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 10px;
             width: 100%;
+            margin-top: 10px;
             transition: background 0.3s;
         }
         
@@ -117,24 +133,22 @@
             background: #45a049;
         }
         
-        .instructions {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 50px;
-        }
-        
-        .instructions h2 {
-            margin-bottom: 20px;
-        }
-        
-        .url-example {
+        .url-display {
             background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             font-family: monospace;
-            margin: 15px 0;
+            font-size: 0.8rem;
             word-break: break-all;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .instructions {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
         }
         
         @media (max-width: 768px) {
@@ -142,8 +156,13 @@
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
             
-            h1 {
-                font-size: 2.2rem;
+            .categories {
+                gap: 10px;
+            }
+            
+            .category-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -151,70 +170,186 @@
 <body>
     <div class="container">
         <header>
-            <h1>📁 Minhas Imagens Hospedadas</h1>
-            <p class="subtitle">Todas as imagens estão disponíveis para uso em qualquer site</p>
+            <h1>📂 Biblioteca de Imagens por Categorias</h1>
+            <p>Organize suas imagens em pastas para fácil acesso</p>
         </header>
         
-        <div class="images-grid" id="images-container">
-            <!-- As imagens serão inseridas aqui via JavaScript -->
+        <!-- Menu de Categorias -->
+        <div class="categories">
+            <button class="category-btn active" onclick="showCategory('imagens')">📁 Imagens</button>
+            <button class="category-btn" onclick="showCategory('historia')">🛍️ História</button>
+
+        </div>
+        
+        <!-- Seção para cada categoria -->
+        <div id="category-sections">
+            <!-- As categorias serão geradas automaticamente -->
         </div>
         
         <div class="instructions">
-            <h2>🎯 Como usar estas imagens no seu site</h2>
-            <p>Após fazer o deploy no Vercel, você receberá um domínio como:</p>
-            <div class="url-example">https://meu-site-imagens.vercel.app</div>
-            
-            <p>Para usar qualquer imagem, utilize o seguinte formato:</p>
-            <div class="url-example">https://seu-dominio.vercel.app/assets/images/NOME-DA-IMAGEM.extensão</div>
-            
-            <p>Exemplo prático no HTML:</p>
-            <div class="url-example">
-                &lt;img src="https://meu-site-imagens.vercel.app/assets/images/minha-foto.jpg" alt="Descrição"&gt;
-            </div>
+            <h3>📝 Como usar as URLs:</h3>
+            <p><strong>Formato:</strong> https://SEU-DOMINIO.vercel.app/assets/[pasta]/[imagem.ext]</p>
+            <p><strong>Exemplos:</strong></p>
+            <ul>
+                <li>Produto: <code>/assets/produtos/camiseta-preta.jpg</code></li>
+                <li>Banner: <code>/assets/banners/home-2024.webp</code></li>
+                <li>Logo: <code>/assets/logos/empresa.svg</code></li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // Lista de imagens - SUBSTITUA com os nomes das SUAS imagens
-        const imagens = [
-            // Exemplo: 'nome-da-imagem.jpg'
-            // Adicione aqui os nomes de TODAS as suas imagens
-            '20-1.webp',
-            '21-1.webp',
-            '22-1.webp',
-            '23-1.webp',
-            '24.webp'
-        ];
+        // 📁 CONFIGURAÇÃO DAS PASTAS E IMAGENS
+        // ⚠️ EDITAR AQUI COM SUAS PASTAS E IMAGENS REAIS
         
-        const container = document.getElementById('images-container');
-        const siteUrl = window.location.origin; // Pega a URL atual
-        
-        // FUNÇÃO IMPORTANTE: Substitua o array acima com os nomes reais das suas imagens
-        // Após enviar as imagens para o GitHub, volte aqui e edite esta lista
-        
-        imagens.forEach((imagem, index) => {
-            const imageUrl = `${siteUrl}/assets/images/${imagem}`;
+        const categorias = {
+            'images': {
+                nome: '🛍️ VapeCount',
+                descricao: 'Imagens de produtos da loja',
+                imagens: [
+                    '20-1.webp',
+                    '21-1.webp',
+                    '22-1.webp',
+                    '23-1.webp',
+                    '24.webp'
+                    // Adicione mais imagens desta pasta
+                ]
+            },
+            'webp': {
+                nome: '🎯 2.500 atividades',
+                descricao: 'Foto das atividades',
+                imagens: [
+                    'Artes - 1.webp',
+                    'Artes - 2.webp',
+                    'Artes - 3.webp',
+                    'alfabetização - 1.webp',
+                    'alfabetização - 2.webp',
+                    'alfabetização 3.webp',
+                    'alfabetização 4.webp',
+                    'alfabetização 5.webp',
+                    'caça palavras - 1.webp',
+                    'caça palavras - 2.webp',
+                    'caça palavras - 3.webp',
+                    'ciências - 1.webp',
+                    'ciências - 2.webp',
+                    'Ciências - 3.webp',
+                    'Ciências - 4.webp',
+                    'ciências - 5.webp',
+                    'ciências - 6.webp',
+                    'cognitiva - 1.webp',
+                    'cognitiva - 2.webp',
+                    'cognitiva - 3.webp',
+                    'cognitiva - 4.webp',
+                    'cognitiva - 5.webp',
+                    'coordenação motora - 1.webp',
+                    'coordenação motora - 2.webp',
+                    'coordenação motora - 3.webp',
+                    'coordenação motora - 4.webp',
+                    'geografia - 1.webp',
+                    'geografia - 3.webp',
+                    'historia - 1.webp',
+                    'historia - 2.webp',
+                    'ingles - 1.webp',
+                    'ingles - 3.webp',
+                    'ingles - 4.webp',
+                    'interpretação - 1.webp',
+                    'interpretação - 2.webp',
+                    'interpretação - 3.webp'
+                    // Adicione mais imagens desta pasta
+                ]
+            },
             
-            const card = document.createElement('div');
-            card.className = 'image-card';
-            card.innerHTML = `
-                <div class="image-container">
-                    <img src="${imageUrl}" alt="${imagem}" loading="lazy" 
-                         onerror="this.src='https://via.placeholder.com/400x250/667eea/ffffff?text=Imagem+não+encontrada'">
-                </div>
-                <div class="image-info">
-                    <div class="image-name">${imagem}</div>
-                    <div class="image-url" id="url-${index}">${imageUrl}</div>
-                    <button class="copy-btn" onclick="copyToClipboard('url-${index}')">
-                        📋 Copiar URL
-                    </button>
+        };
+        
+        const siteUrl = window.location.origin;
+        const sectionsContainer = document.getElementById('category-sections');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        // Gerar todas as seções de categorias
+        function gerarCategorias() {
+            let html = '';
+            
+            // Seção "Todos" (mostra tudo)
+            let todasImagens = [];
+            Object.keys(categorias).forEach(categoria => {
+                categorias[categoria].imagens.forEach(img => {
+                    todasImagens.push({ categoria, imagem: img });
+                });
+            });
+            
+            html += criarSecaoHTML('todos', '📁 Todas as Imagens', 'Todas as imagens organizadas por pasta', todasImagens);
+            
+            // Seções individuais de cada categoria
+            Object.keys(categorias).forEach(categoria => {
+                const dados = categorias[categoria];
+                const imagensComCategoria = dados.imagens.map(img => ({ categoria, imagem: img }));
+                html += criarSecaoHTML(categoria, dados.nome, dados.descricao, imagensComCategoria);
+            });
+            
+            sectionsContainer.innerHTML = html;
+        }
+        
+        function criarSecaoHTML(id, titulo, descricao, imagens) {
+            let html = `
+                <div class="category-section" id="section-${id}">
+                    <div class="category-title">
+                        ${titulo}
+                        <span style="font-size: 0.9rem; opacity: 0.8;">(${imagens.length} imagens)</span>
+                    </div>
+                    <p style="margin-bottom: 20px; opacity: 0.9;">${descricao}</p>
+                    <div class="images-grid">
+            `;
+            
+            imagens.forEach((item, index) => {
+                const url = `${siteUrl}/assets/${item.categoria}/${item.imagem}`;
+                const nomeDisplay = item.categoria === 'todos' ? 
+                    `${item.categoria}/${item.imagem}` : item.imagem;
+                
+                html += `
+                    <div class="image-card">
+                        <div class="image-container">
+                            <img src="${url}" alt="${item.imagem}" 
+                                 onerror="this.src='https://via.placeholder.com/400x200/1a2980/ffffff?text=Imagem+${item.imagem}'">
+                        </div>
+                        <div class="image-info">
+                            <div class="image-path">${item.categoria}/${item.imagem}</div>
+                            <div class="url-display" id="url-${id}-${index}">${url}</div>
+                            <button class="copy-btn" onclick="copyUrl('url-${id}-${index}')">
+                                📋 Copiar URL Completa
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
                 </div>
             `;
             
-            container.appendChild(card);
-        });
+            return html;
+        }
         
-        function copyToClipboard(elementId) {
+        // Mostrar/Esconder categorias
+        function showCategory(categoria) {
+            // Atualizar botões ativos
+            categoryButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(categorias[categoria]?.nome?.replace(/[^\w\s]/gi, '') || 'Todos')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Esconder todas as seções
+            document.querySelectorAll('.category-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Mostrar a selecionada
+            document.getElementById(`section-${categoria}`).style.display = 'block';
+        }
+        
+        function copyUrl(elementId) {
             const element = document.getElementById(elementId);
             const text = element.textContent;
             
@@ -231,10 +366,15 @@
             });
         }
         
-        // Mensagem inicial
-        console.log('⚠️ IMPORTANTE: Não esqueça de editar a lista de imagens no código!');
-        console.log('1. Envie suas imagens para a pasta assets/images/');
-        console.log('2. Volte no index.html e edite o array "imagens" com os nomes reais');
+        // Inicializar
+        gerarCategorias();
+        showCategory('todos'); // Mostrar "Todos" por padrão
+        
+        // Mensagem de configuração
+        console.log('⚙️ CONFIGURAÇÃO:');
+        console.log('1. Crie as pastas no GitHub: assets/produtos/, assets/banners/, etc.');
+        console.log('2. Envie as imagens para cada pasta');
+        console.log('3. Atualize o objeto "categorias" acima com os nomes reais das suas imagens');
     </script>
 </body>
 </html>
