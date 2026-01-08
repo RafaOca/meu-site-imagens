@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca de Imagens por Categorias</title>
     <style>
+        /* ... (mantenha todo o CSS igual que você tem) ... */
         * {
             margin: 0;
             padding: 0;
@@ -18,153 +19,7 @@
             padding: 30px;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .categories {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .category-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .category-btn:hover,
-        .category-btn.active {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: white;
-            transform: translateY(-2px);
-        }
-        
-        .category-section {
-            margin-bottom: 60px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .category-title {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .images-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        
-        .image-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .image-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .image-container {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .image-info {
-            padding: 20px;
-        }
-        
-        .image-path {
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 5px;
-        }
-        
-        .copy-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
-        
-        .copy-btn:hover {
-            background: #45a049;
-        }
-        
-        .url-display {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.8rem;
-            word-break: break-all;
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .instructions {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .images-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-            
-            .categories {
-                gap: 10px;
-            }
-            
-            .category-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-        }
+        /* ... (todo o resto do CSS permanece IGUAL) ... */
     </style>
 </head>
 <body>
@@ -174,11 +29,11 @@
             <p>Organize suas imagens em pastas para fácil acesso</p>
         </header>
         
-        <!-- Menu de Categorias -->
+        <!-- Menu de Categorias - ATUALIZADO -->
         <div class="categories">
-            <button class="category-btn active" onclick="showCategory('imagens')">📁 Imagens</button>
-            <button class="category-btn" onclick="showCategory('historia')">🛍️ História</button>
-
+            <button class="category-btn active" onclick="showCategory('todos')">📁 Todas</button>
+            <button class="category-btn" onclick="showCategory('images')">🛍️ VapeCount</button>
+            <button class="category-btn" onclick="showCategory('webp')">🎯 2.500 atividades</button>
         </div>
         
         <!-- Seção para cada categoria -->
@@ -189,35 +44,34 @@
         <div class="instructions">
             <h3>📝 Como usar as URLs:</h3>
             <p><strong>Formato:</strong> https://SEU-DOMINIO.vercel.app/assets/[pasta]/[imagem.ext]</p>
-            <p><strong>Exemplos:</strong></p>
+            <p><strong>Exemplos das SUAS pastas:</strong></p>
             <ul>
-                <li>Produto: <code>/assets/produtos/camiseta-preta.jpg</code></li>
-                <li>Banner: <code>/assets/banners/home-2024.webp</code></li>
-                <li>Logo: <code>/assets/logos/empresa.svg</code></li>
+                <li>VapeCount: <code>/assets/images/20-1.webp</code></li>
+                <li>Atividades: <code>/assets/webp/Artes - 1.webp</code></li>
             </ul>
         </div>
     </div>
 
     <script>
         // 📁 CONFIGURAÇÃO DAS PASTAS E IMAGENS
-        // ⚠️ EDITAR AQUI COM SUAS PASTAS E IMAGENS REAIS
+        // ⚠️ ATUALIZADO para suas pastas REAIS: images/ e webp/
         
         const categorias = {
             'images': {
                 nome: '🛍️ VapeCount',
-                descricao: 'Imagens de produtos da loja',
+                descricao: 'Imagens de produtos VapeCount',
                 imagens: [
                     '20-1.webp',
                     '21-1.webp',
                     '22-1.webp',
                     '23-1.webp',
                     '24.webp'
-                    // Adicione mais imagens desta pasta
+                    // Adicione MAIS imagens da pasta assets/images/
                 ]
             },
             'webp': {
                 nome: '🎯 2.500 atividades',
-                descricao: 'Foto das atividades',
+                descricao: 'Atividades educacionais',
                 imagens: [
                     'Artes - 1.webp',
                     'Artes - 2.webp',
@@ -255,10 +109,9 @@
                     'interpretação - 1.webp',
                     'interpretação - 2.webp',
                     'interpretação - 3.webp'
-                    // Adicione mais imagens desta pasta
+                    // Adicione MAIS imagens da pasta assets/webp/
                 ]
-            },
-            
+            }
         };
         
         const siteUrl = window.location.origin;
@@ -301,6 +154,7 @@
             `;
             
             imagens.forEach((item, index) => {
+                // URL CORRETA: siteUrl/assets/NOMEDACATEGORIA/nomedaimagem.webp
                 const url = `${siteUrl}/assets/${item.categoria}/${item.imagem}`;
                 const nomeDisplay = item.categoria === 'todos' ? 
                     `${item.categoria}/${item.imagem}` : item.imagem;
@@ -309,7 +163,7 @@
                     <div class="image-card">
                         <div class="image-container">
                             <img src="${url}" alt="${item.imagem}" 
-                                 onerror="this.src='https://via.placeholder.com/400x200/1a2980/ffffff?text=Imagem+${item.imagem}'">
+                                 onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/1a2980/ffffff?text=Imagem+não+encontrada'">
                         </div>
                         <div class="image-info">
                             <div class="image-path">${item.categoria}/${item.imagem}</div>
@@ -332,10 +186,19 @@
         
         // Mostrar/Esconder categorias
         function showCategory(categoria) {
+            console.log('Mostrando categoria:', categoria);
+            
             // Atualizar botões ativos
             categoryButtons.forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent.includes(categorias[categoria]?.nome?.replace(/[^\w\s]/gi, '') || 'Todos')) {
+                
+                // Verifica qual botão foi clicado
+                const btnText = btn.textContent.toLowerCase();
+                if (categoria === 'todos' && btnText.includes('todas')) {
+                    btn.classList.add('active');
+                } else if (categoria === 'images' && btnText.includes('vape')) {
+                    btn.classList.add('active');
+                } else if (categoria === 'webp' && btnText.includes('atividades')) {
                     btn.classList.add('active');
                 }
             });
@@ -346,7 +209,12 @@
             });
             
             // Mostrar a selecionada
-            document.getElementById(`section-${categoria}`).style.display = 'block';
+            const sectionToShow = document.getElementById(`section-${categoria}`);
+            if (sectionToShow) {
+                sectionToShow.style.display = 'block';
+            } else {
+                console.error('Seção não encontrada:', `section-${categoria}`);
+            }
         }
         
         function copyUrl(elementId) {
@@ -367,14 +235,32 @@
         }
         
         // Inicializar
-        gerarCategorias();
-        showCategory('todos'); // Mostrar "Todos" por padrão
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Iniciando biblioteca de imagens...');
+            console.log('URL base:', siteUrl);
+            console.log('Categorias configuradas:', Object.keys(categorias));
+            
+            gerarCategorias();
+            
+            // Mostrar "Todos" por padrão
+            const todasSection = document.getElementById('section-todos');
+            if (todasSection) {
+                todasSection.style.display = 'block';
+            }
+            
+            // Ativar botão "Todas"
+            const btnTodas = document.querySelector('.category-btn[onclick*="todos"]');
+            if (btnTodas) {
+                btnTodas.classList.add('active');
+            }
+        });
         
-        // Mensagem de configuração
-        console.log('⚙️ CONFIGURAÇÃO:');
-        console.log('1. Crie as pastas no GitHub: assets/produtos/, assets/banners/, etc.');
-        console.log('2. Envie as imagens para cada pasta');
-        console.log('3. Atualize o objeto "categorias" acima com os nomes reais das suas imagens');
+        // DEBUG: Verifique no console
+        console.log('⚙️ SUAS CONFIGURAÇÕES:');
+        console.log('1. Pastas físicas no GitHub:', ['assets/images/', 'assets/webp/']);
+        console.log('2. URLs das imagens serão:', siteUrl + '/assets/[pasta]/[imagem]');
+        console.log('3. Imagens na categoria "images":', categorias.images.imagens.length);
+        console.log('4. Imagens na categoria "webp":', categorias.webp.imagens.length);
     </script>
 </body>
 </html>
