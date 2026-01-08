@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca de Imagens por Categorias</title>
     <style>
-        /* ... (mantenha todo o CSS igual que você tem) ... */
         * {
             margin: 0;
             padding: 0;
@@ -17,21 +16,325 @@
             background: linear-gradient(135deg, #1a2980, #26d0ce);
             color: white;
             padding: 30px;
+            min-height: 100vh;
         }
         
-        /* ... (todo o resto do CSS permanece IGUAL) ... */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .category-section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+        
+        .category-section.active {
+            display: block;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        
+        .category-desc {
+            margin-bottom: 25px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .image-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .image-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-info {
+            padding: 20px;
+        }
+        
+        .image-path {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            word-break: break-all;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 6px;
+        }
+        
+        .image-filename {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .copy-btn.copied {
+            background: #2196F3;
+        }
+        
+        .url-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+            margin-top: 10px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .instructions {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .instructions h3 {
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 1.3rem;
+        }
+        
+        .instructions p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .instructions code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .categories {
+                gap: 10px;
+            }
+            
+            .category-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .category-section {
+                padding: 20px;
+            }
+            
+            .image-container {
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .categories {
+                flex-direction: column;
+            }
+        }
+        
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        /* Error state */
+        .error-placeholder {
+            background: rgba(255, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>📂 Biblioteca de Imagens por Categorias</h1>
-            <p>Organize suas imagens em pastas para fácil acesso</p>
+            <p class="subtitle">Organize suas imagens em pastas para fácil acesso</p>
+            <p class="subtitle">Total de imagens: <span id="total-images">0</span></p>
         </header>
         
-        <!-- Menu de Categorias - ATUALIZADO -->
+        <!-- Menu de Categorias -->
         <div class="categories">
-            <button class="category-btn active" onclick="showCategory('todos')">📁 Todas</button>
+            <button class="category-btn active" onclick="showCategory('todos')">📁 Todas as Imagens</button>
             <button class="category-btn" onclick="showCategory('images')">🛍️ VapeCount</button>
             <button class="category-btn" onclick="showCategory('webp')">🎯 2.500 atividades</button>
         </div>
@@ -39,16 +342,20 @@
         <!-- Seção para cada categoria -->
         <div id="category-sections">
             <!-- As categorias serão geradas automaticamente -->
+            <div class="loading" id="loading">
+                Carregando imagens...
+            </div>
         </div>
         
         <div class="instructions">
             <h3>📝 Como usar as URLs:</h3>
-            <p><strong>Formato:</strong> https://SEU-DOMINIO.vercel.app/assets/[pasta]/[imagem.ext]</p>
+            <p><strong>Formato:</strong> <code>https://SEU-DOMINIO.vercel.app/assets/[pasta]/[imagem.ext]</code></p>
             <p><strong>Exemplos das SUAS pastas:</strong></p>
             <ul>
                 <li>VapeCount: <code>/assets/images/20-1.webp</code></li>
                 <li>Atividades: <code>/assets/webp/Artes - 1.webp</code></li>
             </ul>
+            <p><strong>Dica:</strong> Clique em "📋 Copiar URL Completa" para copiar o link da imagem.</p>
         </div>
     </div>
 
@@ -71,7 +378,7 @@
             },
             'webp': {
                 nome: '🎯 2.500 atividades',
-                descricao: 'Atividades educacionais',
+                descricao: 'Atividades educacionais em formato WebP',
                 imagens: [
                     'Artes - 1.webp',
                     'Artes - 2.webp',
@@ -115,11 +422,36 @@
         };
         
         const siteUrl = window.location.origin;
-        const sectionsContainer = document.getElementById('category-sections');
-        const categoryButtons = document.querySelectorAll('.category-btn');
+        let currentCategory = 'todos';
+        
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Iniciando biblioteca de imagens...');
+            console.log('🌐 URL base:', siteUrl);
+            console.log('📁 Categorias:', Object.keys(categorias));
+            
+            // Calcular total de imagens
+            let totalImagens = 0;
+            Object.keys(categorias).forEach(cat => {
+                totalImagens += categorias[cat].imagens.length;
+            });
+            document.getElementById('total-images').textContent = totalImagens;
+            
+            // Gerar as seções
+            gerarCategorias();
+            
+            // Mostrar "Todos" por padrão
+            showCategory('todos');
+            
+            // Esconder loading
+            document.getElementById('loading').style.display = 'none';
+            
+            console.log(`✅ Total de imagens carregadas: ${totalImagens}`);
+        });
         
         // Gerar todas as seções de categorias
         function gerarCategorias() {
+            const sectionsContainer = document.getElementById('category-sections');
             let html = '';
             
             // Seção "Todos" (mostra tudo)
@@ -139,42 +471,50 @@
                 html += criarSecaoHTML(categoria, dados.nome, dados.descricao, imagensComCategoria);
             });
             
-            sectionsContainer.innerHTML = html;
+            sectionsContainer.innerHTML += html;
         }
         
         function criarSecaoHTML(id, titulo, descricao, imagens) {
             let html = `
-                <div class="category-section" id="section-${id}">
+                <div class="category-section" id="section-${id}" data-category="${id}">
                     <div class="category-title">
                         ${titulo}
-                        <span style="font-size: 0.9rem; opacity: 0.8;">(${imagens.length} imagens)</span>
+                        <span class="category-count">${imagens.length} imagem${imagens.length !== 1 ? 'ns' : ''}</span>
                     </div>
-                    <p style="margin-bottom: 20px; opacity: 0.9;">${descricao}</p>
+                    <p class="category-desc">${descricao}</p>
                     <div class="images-grid">
             `;
             
-            imagens.forEach((item, index) => {
-                // URL CORRETA: siteUrl/assets/NOMEDACATEGORIA/nomedaimagem.webp
-                const url = `${siteUrl}/assets/${item.categoria}/${item.imagem}`;
-                const nomeDisplay = item.categoria === 'todos' ? 
-                    `${item.categoria}/${item.imagem}` : item.imagem;
-                
+            if (imagens.length === 0) {
                 html += `
-                    <div class="image-card">
-                        <div class="image-container">
-                            <img src="${url}" alt="${item.imagem}" 
-                                 onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/1a2980/ffffff?text=Imagem+não+encontrada'">
-                        </div>
-                        <div class="image-info">
-                            <div class="image-path">${item.categoria}/${item.imagem}</div>
-                            <div class="url-display" id="url-${id}-${index}">${url}</div>
-                            <button class="copy-btn" onclick="copyUrl('url-${id}-${index}')">
-                                📋 Copiar URL Completa
-                            </button>
-                        </div>
+                    <div class="error-placeholder">
+                        Nenhuma imagem encontrada nesta categoria.
                     </div>
                 `;
-            });
+            } else {
+                imagens.forEach((item, index) => {
+                    // URL CORRETA: siteUrl/assets/NOMEDACATEGORIA/nomedaimagem.webp
+                    const url = `${siteUrl}/assets/${item.categoria}/${encodeURIComponent(item.imagem)}`;
+                    
+                    html += `
+                        <div class="image-card">
+                            <div class="image-container">
+                                <img src="${url}" alt="${item.imagem}" 
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/1a2980/ffffff?text=Imagem+não+carregada'">
+                            </div>
+                            <div class="image-info">
+                                <div class="image-filename">${item.imagem}</div>
+                                <div class="image-path">${item.categoria}/${item.imagem}</div>
+                                <div class="url-display" id="url-${id}-${index}">${url}</div>
+                                <button class="copy-btn" onclick="copyUrl('url-${id}-${index}', this)">
+                                    📋 Copiar URL Completa
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
             
             html += `
                     </div>
@@ -186,22 +526,19 @@
         
         // Mostrar/Esconder categorias
         function showCategory(categoria) {
-            console.log('Mostrando categoria:', categoria);
+            console.log('🔍 Mostrando categoria:', categoria);
+            currentCategory = categoria;
             
             // Atualizar botões ativos
-            categoryButtons.forEach(btn => {
+            document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
-                
-                // Verifica qual botão foi clicado
-                const btnText = btn.textContent.toLowerCase();
-                if (categoria === 'todos' && btnText.includes('todas')) {
-                    btn.classList.add('active');
-                } else if (categoria === 'images' && btnText.includes('vape')) {
-                    btn.classList.add('active');
-                } else if (categoria === 'webp' && btnText.includes('atividades')) {
-                    btn.classList.add('active');
-                }
             });
+            
+            // Ativar botão correto
+            const activeButton = document.querySelector(`.category-btn[onclick="showCategory('${categoria}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
             
             // Esconder todas as seções
             document.querySelectorAll('.category-section').forEach(section => {
@@ -212,55 +549,59 @@
             const sectionToShow = document.getElementById(`section-${categoria}`);
             if (sectionToShow) {
                 sectionToShow.style.display = 'block';
+                console.log(`✅ Mostrando seção: ${categoria} com ${sectionToShow.querySelectorAll('.image-card').length} imagens`);
             } else {
-                console.error('Seção não encontrada:', `section-${categoria}`);
+                console.error('❌ Seção não encontrada:', `section-${categoria}`);
             }
         }
         
-        function copyUrl(elementId) {
+        // Copiar URL para área de transferência
+        function copyUrl(elementId, buttonElement) {
             const element = document.getElementById(elementId);
+            if (!element) {
+                console.error('Elemento não encontrado:', elementId);
+                return;
+            }
+            
             const text = element.textContent;
             
             navigator.clipboard.writeText(text).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copiado!';
-                btn.style.background = '#2196F3';
+                // Feedback visual
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = '✅ URL Copiada!';
+                buttonElement.classList.add('copied');
                 
+                // Restaurar após 2 segundos
                 setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#4CAF50';
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('copied');
                 }, 2000);
+                
+                console.log('📋 URL copiada:', text);
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+                alert('Erro ao copiar URL. Tente selecionar e copiar manualmente.');
             });
         }
         
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Iniciando biblioteca de imagens...');
-            console.log('URL base:', siteUrl);
-            console.log('Categorias configuradas:', Object.keys(categorias));
-            
-            gerarCategorias();
-            
-            // Mostrar "Todos" por padrão
-            const todasSection = document.getElementById('section-todos');
-            if (todasSection) {
-                todasSection.style.display = 'block';
-            }
-            
-            // Ativar botão "Todas"
-            const btnTodas = document.querySelector('.category-btn[onclick*="todos"]');
-            if (btnTodas) {
-                btnTodas.classList.add('active');
-            }
-        });
+        // Função para testar URLs (debug)
+        function testarUrls() {
+            console.log('🔗 Testando URLs:');
+            Object.keys(categorias).forEach(categoria => {
+                categorias[categoria].imagens.slice(0, 2).forEach(img => {
+                    const url = `${siteUrl}/assets/${categoria}/${encodeURIComponent(img)}`;
+                    console.log(`  ${categoria}/${img}: ${url}`);
+                });
+            });
+        }
         
-        // DEBUG: Verifique no console
-        console.log('⚙️ SUAS CONFIGURAÇÕES:');
-        console.log('1. Pastas físicas no GitHub:', ['assets/images/', 'assets/webp/']);
-        console.log('2. URLs das imagens serão:', siteUrl + '/assets/[pasta]/[imagem]');
-        console.log('3. Imagens na categoria "images":', categorias.images.imagens.length);
-        console.log('4. Imagens na categoria "webp":', categorias.webp.imagens.length);
+        // Expor funções para debug no console
+        window.testarUrls = testarUrls;
+        window.mostrarCategoria = showCategory;
+        window.categorias = categorias;
+        
+        // Teste inicial
+        setTimeout(testarUrls, 1000);
     </script>
 </body>
 </html>
